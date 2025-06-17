@@ -1,5 +1,3 @@
-Seja bem-vindo(a) ao nosso desafio técnico. A proposta é avaliar suas habilidades com TypeScript, React, boas práticas de desenvolvimento, legibilidade de código, clareza de organização e capacidade de resolver problemas do mundo real.
-
 ## 🎯 Objetivo
 
 Desenvolver uma aplicação full-stack que permita o **cadastro, listagem, filtro, exportação e comunicação em tempo real de propostas**, com uso de mensageria (RabbitMQ).
