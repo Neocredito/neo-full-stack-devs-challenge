@@ -19,17 +19,17 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 - Nome (obrigatório)
 - CPF (obrigatório)
 - Data de nascimento (obrigatório)
-- Status (obrigatório): com as opções **"ANÁLISE"** ou **"CONCLUÍDA"**
+- Status (obrigatório): com as opções **"AGUARDANDO COMPROVANTE"** ou **"CONCLUÍDA"**
 - Importar comprovante (obrigatório): aceita apenas **PDF**  
-  > ⚠️ Somente exibido quando o status for **"ANÁLISE"**  
+  > ⚠️ Somente exibido quando o status for **"AGUARDANDO COMPROVANTE"**  
   > O conteúdo do PDF será convertido para **plain-text** e armazenado no banco de dados
 - Observações:
-  - Deve ser exibido **somente se o status for "ANÁLISE"**
+  - Deve ser exibido **somente se o status for "AGUARDANDO COMPROVANTE"**
   - Se o status for **"CONCLUÍDA"** e o campo for enviado, deve gerar um **erro de validação**
 
 > **Fluxo especial (RabbitMQ + WebSocket)**  
-> Ao importar o comprovante com o status "ANÁLISE" e submeter o formulário:
-> - O status é automaticamente alterado para **"CONCLUÍDA"**
+> Ao importar o comprovante com o status "AGUARDANDO COMPROVANTE" e submeter o formulário:
+> - **Caso não ocorra nenhum erro**, o status da proposta é automaticamente alterado para **"CONCLUÍDA"**
 > - A proposta é **enviada para a fila RabbitMQ**
 > - Um **WebSocket** informa em tempo real o estado do processamento:
 >   - `Processando...`
@@ -40,7 +40,7 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 ### 2. Listagem de Propostas
 
 - Duas telas distintas:
-  - Propostas em **"ANÁLISE"**
+  - Propostas em **"AGUARDANDO COMPROVANTE"**
   - Propostas **"CONCLUÍDAS"**
 - Ambas exibem os dados em tabela, separadas por status
 
@@ -68,7 +68,7 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
   - CPF
   - Data de nascimento
   - Status
-  - Observações (somente se houver e o status for "ANÁLISE")
+  - Observações (somente se houver e o status for "AGUARDANDO COMPROVANTE")
   - Comprovante: mostrar o conteúdo extraído em texto do arquivo PDF
 
 > Essa exibição pode ser feita em um modal, drawer ou nova rota (`/propostas/:id`), conforme decisão técnica.  
@@ -108,7 +108,7 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 
 ## ⚠️ Ambiguidades e Suposições
 
-- O campo de **comprovante** só aparece quando o status for "ANÁLISE"
+- O campo de **comprovante** só aparece quando o status for "AGUARDANDO COMPROVANTE"
 - Após o upload e envio da proposta, o **status é automaticamente alterado** para "CONCLUÍDA"
 - A fila RabbitMQ pode ser nomeada como `fila.processarProposta`
 - O processamento é simulado e exibido em tempo real via WebSocket com status como `processando`, `concluído`
