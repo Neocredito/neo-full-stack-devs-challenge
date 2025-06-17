@@ -1,6 +1,12 @@
+# 💼 Desafio Full-Stack Developer - Neo crédito
+
+Seja bem-vindo(a) ao nosso desafio técnico. A proposta é avaliar suas habilidades com TypeScript, React, boas práticas de desenvolvimento, legibilidade de código, clareza de organização e capacidade de resolver problemas do mundo real.
+
+---
+
 ## 🎯 Objetivo
 
-Desenvolver uma aplicação full-stack que permita o **cadastro, listagem, filtro, exportação e comunicação em tempo real de propostas**, com uso de mensageria (RabbitMQ).
+Desenvolver uma aplicação full-stack que permita o **cadastro, listagem, filtro, exportação e comunicação em tempo real de propostas**, com uso de mensageria (**RabbitMQ**).
 
 ---
 
@@ -14,72 +20,108 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 - CPF (obrigatório)
 - Data de nascimento (obrigatório)
 - Status (obrigatório): com as opções **"ANÁLISE"** ou **"CONCLUÍDA"**
+- Importar comprovante (obrigatório): aceita apenas **PDF**  
+  > ⚠️ Somente exibido quando o status for **"ANÁLISE"**  
+  > O conteúdo do PDF será convertido para **plain-text** e armazenado no banco de dados
 - Observações:
-  - **Deve ser exibido somente se o status for "ANÁLISE"**
-  - **Se o status for "CONCLUÍDA" e o campo for enviado, deve ser exibido um erro de validação (não permitir salvar com observações)**
+  - Deve ser exibido **somente se o status for "ANÁLISE"**
+  - Se o status for **"CONCLUÍDA"** e o campo for enviado, deve gerar um **erro de validação**
+
+> **Fluxo especial (RabbitMQ + WebSocket)**  
+> Ao importar o comprovante com o status "ANÁLISE" e submeter o formulário:
+> - O status é automaticamente alterado para **"CONCLUÍDA"**
+> - A proposta é **enviada para a fila RabbitMQ**
+> - Um **WebSocket** informa em tempo real o estado do processamento:
+>   - `Processando...`
+>   - `Concluído!`
+
+---
 
 ### 2. Listagem de Propostas
 
-- Criar **duas telas distintas**, uma para cada status:
-  - Tela de Propostas em **"ANÁLISE"**
-  - Tela de Propostas **"CONCLUÍDAS"**
-- Cada tela deve exibir a lista de propostas com aquele respectivo status.
+- Duas telas distintas:
+  - Propostas em **"ANÁLISE"**
+  - Propostas **"CONCLUÍDAS"**
+- Ambas exibem os dados em tabela, separadas por status
+
+---
 
 ### 3. Filtros
 
-- A listagem deve permitir **filtrar pelos seguintes campos** da proposta:
+- Os filtros disponíveis devem ser aplicáveis dinamicamente:
   - Nome
   - CPF
   - Data de nascimento
 
-- Os filtros devem ser aplicados dinamicamente e facilitar a visualização.
+---
 
 ### 4. Exportação de Dados
 
-- A aplicação deve permitir **exportar os dados filtrados da listagem atual em formato CSV**.
+- Exportar as propostas filtradas da listagem atual em **formato CSV**
+
+---
+
+### 5. Exibição Detalhada da Proposta
+
+- A aplicação deve permitir visualizar **todos os dados da proposta cadastrada** em um **componente de visualização detalhada**, incluindo:
+  - Nome
+  - CPF
+  - Data de nascimento
+  - Status
+  - Observações (somente se houver e o status for "ANÁLISE")
+  - Comprovante: mostrar o conteúdo extraído em texto do arquivo PDF
+
+> Essa exibição pode ser feita em um modal, drawer ou nova rota (`/propostas/:id`), conforme decisão técnica.  
+> A exibição do **conteúdo do comprovante** deve deixar claro que se trata do **texto extraído do PDF**, não o arquivo binário.
 
 ---
 
 ## 🛠️ Requisitos Técnicos
 
-- [ ] Frontend em **React** com **TypeScript**
-- [ ] Utilizar **Next.js** como framework frontend
-- [ ] Utilizar **Material UI** ou **Tailwind CSS**
-- [ ] Backend em **Node.js** com **TypeScript**, utilizando:
-  **NestJS** ou **Express**
-- [ ] Utilizar **MariaDB** como banco de dados relacional
-- [ ] Utilizar **RabbitMQ** como sistema de mensageria
+- [x] **Frontend**
+  - React com TypeScript
+  - Framework: **Next.js**
+  - Estilização: **Material UI** ou **Tailwind CSS**
+- [x] **Backend**
+  - Node.js com TypeScript (NestJS ou Express.js)
+  - Banco de dados: **MariaDB**
+  - Sistema de mensageria: **RabbitMQ**
+  - Comunicação em tempo real: **WebSocket**
+- [x] A aplicação deve rodar com `docker-compose up`
 
 ---
 
 ## ✅ Critérios de Avaliação
 
-- Aplicação funcional e sem erros
-- Implementação correta dos requisitos funcionais
-- Clareza e organização do código
-- Validações corretas no formulário
-- Utilização correta de TypeScript no frontend e backend
-- Filtros dinâmicos funcionais
-- Exportação em CSV conforme filtros aplicados
-- Qualidade da arquitetura proposta
-- Uso correto de banco de dados e ORM (opcional: Sequelize, Prisma, TypeORM, etc.)
-- A aplicação toda deve rodar em um **docker compose up**
+- Funcionalidade completa e sem erros
+- Validações corretas e rigorosas
+- Código limpo e organizado
+- Uso adequado de TypeScript (frontend e backend)
+- Exportação CSV com filtros aplicados
+- RabbitMQ integrado corretamente
+- WebSocket funcionando conforme esperado
+- Visualização detalhada dos dados da proposta
+- Arquitetura limpa e sustentável
+- Tudo funcional via **Docker Compose**
 
 ---
 
 ## ⚠️ Ambiguidades e Suposições
 
--  **Tome decisões técnicas razoáveis** com base em boas práticas.
-- Documente todas as suposições feitas neste `README.md` ou em um arquivo separado dentro do repositório.
+- O campo de **comprovante** só aparece quando o status for "ANÁLISE"
+- Após o upload e envio da proposta, o **status é automaticamente alterado** para "CONCLUÍDA"
+- A fila RabbitMQ pode ser nomeada como `fila.processarProposta`
+- O processamento é simulado e exibido em tempo real via WebSocket com status como `processando`, `concluído`
+- O conteúdo dos arquivos PDF será extraído com uma lib como `pdf-parse`
+- A visualização de detalhes pode ser por rota dedicada, modal ou drawer
 
 ---
 
 ## 📦 Entrega
 
-- Faça um fork deste repositório para sua conta no GitHub.
-- Crie uma nova branch usando seu nome e sobrenome. Por exemplo: victor-papa.
-- Após concluir o desafio, crie um pull request para este repositório (https://github.com/Neocredito/neo-full-stack-devs-challenge), direcionado à branch principal.
-- Receberemos uma notificação sobre seu pull request, revisaremos sua solução e entraremos em contato com você.
+- Faça um fork deste repositório: [https://github.com/Neocredito/neo-full-stack-devs-challenge](https://github.com/Neocredito/neo-full-stack-devs-challenge)
+- Crie uma branch com seu nome e sobrenome, por exemplo: `handryos-santos`
+- Ao finalizar, abra um **Pull Request** para a `main` do repositório original
 
 ---
 
@@ -90,5 +132,6 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
   - [Handryos Ghidorsi dos Santos](https://www.linkedin.com/in/handryos-ghidorsi-dos-santos-421b00258/)
   - [Danilo Gomes Ferraz](https://www.linkedin.com/in/udaanilo/)
 
+---
 
 **Boa sorte!** Estamos ansiosos para ver sua solução. 🚀
