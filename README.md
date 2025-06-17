@@ -6,7 +6,7 @@ Seja bem-vindo(a) ao nosso desafio técnico. A proposta é avaliar suas habilida
 
 ## 🎯 Objetivo
 
-Desenvolver uma aplicação full-stack que permita o **cadastro, listagem, filtro, exportação e comunicação em tempo real de propostas**, com uso de mensageria (**RabbitMQ**).
+Desenvolver uma aplicação full-stack que permita o **cadastro, listagem, filtro e comunicação em tempo real de propostas**, com uso de mensageria (**RabbitMQ**).
 
 ---
 
@@ -55,13 +55,8 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 
 ---
 
-### 4. Exportação de Dados
 
-- Exportar as propostas filtradas da listagem atual em **formato CSV**
-
----
-
-### 5. Edição de Propostas
+### 4. Edição de Propostas
 
 - A aplicação deve permitir editar os dados de uma proposta cadastrada através de uma **tela de edição**
 - A tela de edição deve conter os seguintes campos:
@@ -98,7 +93,6 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 - Validações corretas e rigorosas
 - Código limpo e organizado
 - Uso adequado de TypeScript (frontend e backend)
-- Exportação CSV com filtros aplicados
 - RabbitMQ integrado corretamente
 - WebSocket funcionando conforme esperado
 - Edição de propostas com bloqueio adequado conforme status
@@ -107,7 +101,7 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 
 ---
 
-## ⚠️ Ambiguidades e Suposições
+## ⚠️ Dicas
 
 -  **Tome decisões técnicas razoáveis** com base em boas práticas.
 - Documente todas as suposições feitas neste README.md ou em um arquivo separado dentro do repositório.
