@@ -1,4 +1,4 @@
-# 💼 Desafio Full-Stack Developer - Neo crédito
+# 💼 Desafio Full-Stack Developer - Neo Crédito
 
 Seja bem-vindo(a) ao nosso desafio técnico. A proposta é avaliar suas habilidades com TypeScript, React, boas práticas de desenvolvimento, legibilidade de código, clareza de organização e capacidade de resolver problemas do mundo real.
 
@@ -29,8 +29,8 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 
 > **Fluxo especial (RabbitMQ + WebSocket)**  
 > Ao importar o comprovante com o status "AGUARDANDO COMPROVANTE" e submeter o formulário:
+> - O comprovante é **enviado para a fila do RabbitMQ**
 > - **Caso não ocorra nenhum erro**, o status da proposta é automaticamente alterado para **"CONCLUÍDA"**
-> - A proposta é **enviada para a fila RabbitMQ**
 > - Um **WebSocket** informa em tempo real o estado do processamento:
 >   - `Processando...`
 >   - `Concluído!`
@@ -61,18 +61,19 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 
 ---
 
-### 5. Exibição Detalhada da Proposta
+### 5. Edição de Propostas
 
-- A aplicação deve permitir visualizar **todos os dados da proposta cadastrada** em um **componente de visualização detalhada**, incluindo:
+- A aplicação deve permitir editar os dados de uma proposta cadastrada através de uma **tela de edição**
+- A tela de edição deve conter os seguintes campos:
   - Nome
   - CPF
   - Data de nascimento
   - Status
-  - Observações (somente se houver e o status for "AGUARDANDO COMPROVANTE")
-  - Comprovante: mostrar o conteúdo extraído em texto do arquivo PDF
+  - Observações (se status for "AGUARDANDO COMPROVANTE")
+  - Comprovante (somente se o status for "AGUARDANDO COMPROVANTE")
 
-> Essa exibição pode ser feita em um modal, drawer ou nova rota (`/propostas/:id`), conforme decisão técnica.  
-> A exibição do **conteúdo do comprovante** deve deixar claro que se trata do **texto extraído do PDF**, não o arquivo binário.
+> ⚠️ Se a proposta estiver com status **"CONCLUÍDA"**, **todos os campos devem estar desabilitados para edição**, funcionando como modo de visualização bloqueado.  
+> A rota pode ser `/propostas/:id/editar` ou similar.
 
 ---
 
@@ -100,7 +101,7 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 - Exportação CSV com filtros aplicados
 - RabbitMQ integrado corretamente
 - WebSocket funcionando conforme esperado
-- Visualização detalhada dos dados da proposta
+- Edição de propostas com bloqueio adequado conforme status
 - Arquitetura limpa e sustentável
 - Tudo funcional via **Docker Compose**
 
@@ -108,12 +109,8 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 
 ## ⚠️ Ambiguidades e Suposições
 
-- O campo de **comprovante** só aparece quando o status for "AGUARDANDO COMPROVANTE"
-- Após o upload e envio da proposta, o **status é automaticamente alterado** para "CONCLUÍDA"
-- A fila RabbitMQ pode ser nomeada como `fila.processarProposta`
-- O processamento é simulado e exibido em tempo real via WebSocket com status como `processando`, `concluído`
-- O conteúdo dos arquivos PDF será extraído com uma lib como `pdf-parse`
-- A visualização de detalhes pode ser por rota dedicada, modal ou drawer
+-  **Tome decisões técnicas razoáveis** com base em boas práticas.
+- Documente todas as suposições feitas neste README.md ou em um arquivo separado dentro do repositório.
 
 ---
 
