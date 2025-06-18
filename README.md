@@ -55,7 +55,6 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 
 ---
 
-
 ### 4. Edição de Propostas
 
 - A aplicação deve permitir editar os dados de uma proposta cadastrada através de uma **tela de edição**
@@ -105,6 +104,32 @@ A aplicação deve permitir o cadastro de uma nova proposta com os seguintes cam
 
 -  **Tome decisões técnicas razoáveis** com base em boas práticas.
 - Documente todas as suposições feitas neste README.md ou em um arquivo separado dentro do repositório.
+
+---
+
+## 🎁 BÔNUS
+
+Se quiser ir além dos requisitos obrigatórios e se destacar ainda mais, considere implementar os seguintes pontos:
+
+### ✅ Testes Automatizados
+
+- **Testes de Integração e Unidade**
+  - Utilize o **Jest** para testar regras de negócio e fluxos críticos no backend (ex: mudança de status após processamento do comprovante).
+- **Testes End-to-End**
+  - Implemente testes com **Cypress** para validar o comportamento do sistema em toda a jornada do usuário:
+    - Cadastro de proposta com e sem comprovante
+    - Edição com bloqueio por status
+    - WebSocket funcionando
+    - Validações no formulário
+
+### 🔐 Autenticação de Usuário
+
+- Implemente uma **camada de autenticação** simples para proteger as rotas da aplicação:
+  - Login com e-mail e senha
+  - Proteção nas rotas de cadastro, edição e listagem de propostas
+  - Pode utilizar JWT ou sessões (à sua escolha)
+
+> Esses itens não são obrigatórios, mas demonstram atenção à qualidade, segurança e escalabilidade da aplicação.
 
 ---
 
